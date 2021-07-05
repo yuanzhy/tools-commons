@@ -1,13 +1,16 @@
 package com.yuanzhy.tools.commons.io;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import org.apache.commons.io.IOUtils;
+import java.io.OutputStream;
+import java.util.List;
 
 /**
  *
@@ -80,9 +83,18 @@ public class IOUtilsDemo {
         // String toString(URL url, String charset) throws IOException;
     }
 
-    public void readLinesDemo() {
+    public void others() throws IOException {
+        InputStream inputStream  = null; OutputStream outputStream = null;
+        // 按照行读取结果
+        InputStream is = new FileInputStream("test.txt");
+        List<String> lines = IOUtils.readLines(is, "UTF-8");
 
-//        IOUtils.readLines()
+        // 将行集合写入输出流
+        OutputStream os = new FileOutputStream("newTest.txt");
+        IOUtils.writeLines(lines, System.lineSeparator(), os, "UTF-8");
+
+        // 拷贝输入流到输出流
+        IOUtils.copy(inputStream, outputStream);
     }
 
 }
