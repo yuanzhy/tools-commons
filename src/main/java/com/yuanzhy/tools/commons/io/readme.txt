@@ -11,3 +11,5 @@ org.apache.commons.io.input
 org.apache.commons.io.monitor
 org.apache.commons.io.output
 org.apache.commons.io.serialization
+
+input扩展了许多特殊功能的输入流，下面简单介绍几个。

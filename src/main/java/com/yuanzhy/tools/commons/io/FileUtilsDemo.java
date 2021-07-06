@@ -1,14 +1,19 @@
 package com.yuanzhy.tools.commons.io;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.file.PathUtils;
+import org.junit.Test;
 
 public class FileUtilsDemo {
 
@@ -69,19 +74,20 @@ public class FileUtilsDemo {
         // ... ...
     }
 
-    public void name() {
-        // TODO
-        /*
-         * 获取文件名称
-         * a/b/c.txt --&gt; c.txt
-         * a.txt     --&gt; a.txt
-         * a/b/c     --&gt; c
-         * a/b/c/    --&gt; ""
-         */
-        final String name = "/home/xxx/test.txt";
-        FilenameUtils.getName(name); // test.txt
-        FilenameUtils.getBaseName(name); // test
-        FilenameUtils.getExtension(name); // txt
-        FilenameUtils.getPath(name); // /home/xxx/
+    @Test
+    public void name() throws Exception {
+        // 获取名称，后缀等
+        String name = "/home/xxx/test.txt";
+        FilenameUtils.getName(name); // "test.txt"
+        FilenameUtils.getBaseName(name); // "test"
+        FilenameUtils.getExtension(name); // "txt"
+        FilenameUtils.getPath(name); // "/home/xxx/"
+
+        // 将相对路径转换为绝对路径
+        FilenameUtils.normalize("/foo/bar/.."); // "/foo"
+    }
+
+    public void path() {
+        // PathUtils
     }
 }
