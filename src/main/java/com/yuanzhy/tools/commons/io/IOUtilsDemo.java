@@ -21,9 +21,9 @@ public class IOUtilsDemo {
      * closeQuietly: 安静的关闭流，不需要判空和捕获异常，同时支持关闭多个流
      * @throws Exception
      */
-    public void closeDemo() {
-        InputStream inputStream = null;
-        InputStream outputStream = null;
+    public void closeDemo() throws IOException {
+        InputStream inputStream = new FileInputStream("test.txt");
+        OutputStream outputStream = new FileOutputStream("test.txt");
         // 原生写法
         if (inputStream != null) {
             try {
@@ -60,7 +60,6 @@ public class IOUtilsDemo {
 
     public void readAsString() throws IOException {
         // 输入流转换为字符串
-
         InputStream is = new FileInputStream("foo.txt");
         // 原生写法
         BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));

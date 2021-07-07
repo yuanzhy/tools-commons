@@ -1,19 +1,19 @@
 package com.yuanzhy.tools.commons.io;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.file.Counters;
+import org.apache.commons.io.file.PathUtils;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.file.PathUtils;
-import org.junit.Test;
 
 public class FileUtilsDemo {
 
@@ -87,7 +87,25 @@ public class FileUtilsDemo {
         FilenameUtils.normalize("/foo/bar/.."); // "/foo"
     }
 
-    public void path() {
-        // PathUtils
+    public void path() throws IOException {
+        // path既可以表示目录也可以表示文件
+
+        // 获取当前路径
+        Path path = PathUtils.current();
+        // 删除path
+        PathUtils.delete(path);
+        // 路径或文件是否为空
+        PathUtils.isEmpty(path);
+        // 设置只读
+        PathUtils.setReadOnly(path, true);
+        // 复制
+        PathUtils.copyFileToDirectory(Paths.get("test.txt"), path);
+        PathUtils.copyDirectory(Paths.get("/srcPath"), Paths.get("/destPath"));
+        // 统计目录内文件数量
+        Counters.PathCounters counters = PathUtils.countDirectory(path);
+        counters.getByteCounter(); // 字节大小
+        counters.getDirectoryCounter(); // 目录个数
+        counters.getFileCounter(); // 文件个数
+        // ... ...
     }
 }

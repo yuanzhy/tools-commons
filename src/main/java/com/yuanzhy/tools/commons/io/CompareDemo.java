@@ -1,23 +1,15 @@
 package com.yuanzhy.tools.commons.io;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.comparator.CompositeFileComparator;
 import org.apache.commons.io.comparator.DirectoryFileComparator;
 import org.apache.commons.io.comparator.NameFileComparator;
-import org.apache.commons.io.input.MessageDigestCalculatingInputStream;
 import org.junit.Test;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  *
@@ -53,28 +45,5 @@ public class CompareDemo {
                     DirectoryFileComparator.DIRECTORY_COMPARATOR,
                     NameFileComparator.NAME_COMPARATOR);
         Collections.sort(files, dirAndNameComp); // ["/foo/abc", "/foo/def", "/foo/hh.txt", "/foo/test.txt"]
-    }
-
-    @Test
-    public void t() throws Exception {
-        MessageDigestCalculatingInputStream md5InputStream = new MessageDigestCalculatingInputStream(new FileInputStream("/home/yuanzhy/文档/index.html"));
-        IOUtils.copy(md5InputStream, new FileOutputStream("/home/yuanzhy/文档/index2.html"));
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(FileUtils.readFileToByteArray(new File("/home/yuanzhy/文档/index2.html")));
-        System.out.println(bytesToHex(md.digest()));
-//        System.out.println(bytesToHex(md5InputStream.getMessageDigest().digest()));
-    }
-
-
-    public static String bytesToHex(byte[] bytes) {
-        StringBuffer sb = new StringBuffer();
-        for(int i = 0; i < bytes.length; i++) {
-            String hex = Integer.toHexString(bytes[i] & 0xFF);
-            if(hex.length() < 2){
-                sb.append(0);
-            }
-            sb.append(hex);
-        }
-        return sb.toString();
     }
 }
