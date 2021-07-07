@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.AutoCloseInputStream;
-import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.io.input.CountingInputStream;
 import org.apache.commons.io.input.ReversedLinesFileReader;
 import org.junit.Test;
@@ -59,4 +58,26 @@ public class InputDemo {
         }
     }
 
+    /**
+     * 可观察的输入流（典型的观察者模式），可实现边读取边处理
+     * 比如将某些字节替换为另一个字节，计算md5摘要等
+     * 当然你也可以完全写到文件里后在做处理，这样相当于做了两次遍历，性能较差
+     * @throws IOException
+     */
+    @Test
+    public void observableInputStream() {
+        // TODO
+
+    }
+
+    /**
+     * 其他的还有很多，不做过多介绍了
+     */
+    public void others() {
+        // BOMInputStream: 同时读取文本文件的bom头
+        // BoundedInputStream：有界的流，控制只允许读取前x个字节
+        // BrokenInputStream: 一个错误流，永远抛出IOException
+        // CharSequenceInputStream: 支持StringBuilder,StringBuffer等读取
+        // ... ...
+    }
 }
