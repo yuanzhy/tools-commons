@@ -1,6 +1,7 @@
 package com.yuanzhy.tools.commons.codec;
 
 import org.apache.commons.codec.net.URLCodec;
+import org.junit.Test;
 
 /**
  *
@@ -9,7 +10,12 @@ import org.apache.commons.codec.net.URLCodec;
  */
 public class NetDemo {
 
-    public void URLCodec() {
-//        URLCodec.encodeUrl()
+    @Test
+    public void URLCodec() throws Exception {
+        URLCodec urlCodec = new URLCodec();
+        // url编码
+        String encUrl  = urlCodec.encode("http://x.com?f=哈");
+        // url解码
+        String url = urlCodec.decode(encUrl);
     }
 }
