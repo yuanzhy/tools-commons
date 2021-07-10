@@ -1,12 +1,12 @@
 package com.yuanzhy.tools.commons.codec;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.junit.Test;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *
@@ -23,7 +23,11 @@ public class DigestDemo {
         // 对数据做sha摘要
         String sha1 = DigestUtils.sha1Hex("测试");
         String sha256 = DigestUtils.sha256Hex("测试");
+        String sha384 = DigestUtils.sha384Hex("测试");
+        String sha512 = DigestUtils.sha512Hex("测试");
         String sha3_256 = DigestUtils.sha3_256Hex("测试");
+        String sha3_384 = DigestUtils.sha3_384Hex("测试");
+        String sha3_512 = DigestUtils.sha3_512Hex("测试");
         // ... ... 基本支持所有的sha算法
 
         // 获取Java原生的digest对象
@@ -58,11 +62,16 @@ public class DigestDemo {
 
     // hmac相关摘要算法
     public void hmacUtils() {
-        String key = "asdf3234";
+        String key = "asdf3234asdf3234asdf3234asdf3234";
         String valueToDigest = "测试数据";
+
+        HmacUtils.getHmacSha256(valueToDigest.getBytes());
         // 做HMAC-MD5摘要
         String hmacMd5 = new HmacUtils(HmacAlgorithms.HMAC_MD5, key).hmacHex(valueToDigest);
-        // 做HMAC-sha256摘要
-        String hmacsha256 = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(valueToDigest);
+        // 做HMAC-sha摘要
+        String hmacSha256 = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(valueToDigest);
+        String hmacSha384 = new HmacUtils(HmacAlgorithms.HMAC_SHA_384, key).hmacHex(valueToDigest);
+        String hmacSha512 = new HmacUtils(HmacAlgorithms.HMAC_SHA_512, key).hmacHex(valueToDigest);
     }
+
 }

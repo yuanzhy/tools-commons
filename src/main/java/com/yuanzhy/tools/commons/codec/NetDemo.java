@@ -14,8 +14,10 @@ public class NetDemo {
     public void URLCodec() throws Exception {
         URLCodec urlCodec = new URLCodec();
         // url编码
-        String encUrl  = urlCodec.encode("http://x.com?f=哈");
+        String encUrl = urlCodec.encode("http://x.com?f=哈");
+        System.out.println(encUrl);
         // url解码
-        String url = urlCodec.decode(encUrl);
+        String decUrl = urlCodec.decode(encUrl);
+        System.out.println(decUrl);
     }
 }
