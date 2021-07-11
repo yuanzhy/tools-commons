@@ -1,5 +1,6 @@
 package com.yuanzhy.tools.commons.compress;
 
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipParameters;
@@ -44,8 +45,12 @@ public class CompressorDemo {
         }
     }
 
-    public void unbz2() {
-        // TODO
-//        BZip2CompressorInputStream bzis = new BZip2CompressorInputStream(new FileInputStream(""));
+    public void unbz2() throws IOException {
+        String bzFile = "/test.tar.gz";
+        FileInputStream is = new FileInputStream(bzFile);
+        try (BZip2CompressorInputStream bzis = new BZip2CompressorInputStream(is)) {
+            File srcFile = new File("test.tar");
+            FileUtils.copyToFile(bzis, srcFile);
+        }
     }
 }
