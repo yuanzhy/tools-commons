@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.util.function.Consumer;
 
 /**
- * 简单Runtime异步执行demo, 很多细节不是很严谨，不要在意。
+ * 简易Runtime异步执行demo, 很多细节不是很严谨，只看大体思路即可。
  */
 public class RuntimeAsyncDemo {
 

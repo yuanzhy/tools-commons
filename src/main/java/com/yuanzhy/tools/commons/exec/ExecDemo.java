@@ -25,8 +25,8 @@ public class ExecDemo {
         // 同步调用其他进程
 
         // 不使用工具类的写法
-//        Process process = Runtime.getRuntime().exec("ls -l");
-        Process process = Runtime.getRuntime().exec("cmd /c dir");
+        // Process process = Runtime.getRuntime().exec("ls -l");
+        Process process = Runtime.getRuntime().exec("ping 192.168.1.10");
         int exitCode = process.waitFor(); // 阻塞等待完成
         if (exitCode == 0) { // 状态码0表示执行成功
             String result = IOUtils.toString(process.getInputStream()); // "IOUtils" commons io中的工具类，详情可以参见前续文章介绍
@@ -41,7 +41,7 @@ public class ExecDemo {
     }
 
     public void runtimeThread() throws Exception {
-        final Process process = Runtime.getRuntime().exec("cmd /c dir");
+        final Process process = Runtime.getRuntime().exec("ping 192.168.1.10");
         new Thread(() -> {
             try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;
@@ -64,73 +64,66 @@ public class ExecDemo {
     // 实现起来较为复杂，这里就不做示例了，想要示例可以留言。
     // 下面来看看使用commons-exec如何简单的实现这些功能
     @Test
-    public void execSync() {
-        try {
-            String command = "ping 192.168.1.10";
-            //接收正常结果流
-            ByteArrayOutputStream susStream = new ByteArrayOutputStream();
-            //接收异常结果流
-            ByteArrayOutputStream errStream = new ByteArrayOutputStream();
-            CommandLine commandLine = CommandLine.parse(command);
-            DefaultExecutor exec = new DefaultExecutor();
-//            exec.setExitValues(null);
-            //设置一分钟超时
-//            ExecuteWatchdog watchdog = new ExecuteWatchdog(60*1000);
-//            exec.setWatchdog(watchdog);
-            PumpStreamHandler streamHandler = new PumpStreamHandler(susStream, errStream);
-            exec.setStreamHandler(streamHandler);
-            int code = exec.execute(commandLine);
-            System.out.println("result code: " + code);
-            // 不同操作系统注意编码，否则结果乱码
-            String suc = susStream.toString("GBK");
-            String err = errStream.toString("GBK");
-            System.out.println(suc);
-            System.out.println(err);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void execSync() throws IOException {
+        String command = "ping 192.168.1.10";
+        //接收正常结果流
+        ByteArrayOutputStream susStream = new ByteArrayOutputStream();
+        //接收异常结果流
+        ByteArrayOutputStream errStream = new ByteArrayOutputStream();
+        CommandLine commandLine = CommandLine.parse(command);
+        DefaultExecutor exec = new DefaultExecutor();
+        PumpStreamHandler streamHandler = new PumpStreamHandler(susStream, errStream);
+        exec.setStreamHandler(streamHandler);
+        int code = exec.execute(commandLine);
+        System.out.println("result code: " + code);
+        // 不同操作系统注意编码，否则结果乱码
+        String suc = susStream.toString("GBK");
+        String err = errStream.toString("GBK");
+        System.out.println(suc);
+        System.out.println(err);
     }
 
     @Test
-    public void execAsync() {
-        try {
-            String command = "ping 192.168.1.10";
-            //接收正常结果流
-            ByteArrayOutputStream susStream = new ByteArrayOutputStream();
-            //接收异常结果流
-            ByteArrayOutputStream errStream = new ByteArrayOutputStream();
-            CommandLine commandLine = CommandLine.parse(command);
-            DefaultExecutor exec = new DefaultExecutor();
-            //设置一分钟超时
+    public void execAsync() throws IOException, InterruptedException {
+        String command = "ping 192.168.1.10";
+        //接收正常结果流
+        ByteArrayOutputStream susStream = new ByteArrayOutputStream();
+        //接收异常结果流
+        ByteArrayOutputStream errStream = new ByteArrayOutputStream();
+        CommandLine commandLine = CommandLine.parse(command);
+        DefaultExecutor exec = new DefaultExecutor();
+        //设置一分钟超时
 //            ExecuteWatchdog watchdog = new ExecuteWatchdog(60*1000);
 //            exec.setWatchdog(watchdog);
 
-            PumpStreamHandler streamHandler = new PumpStreamHandler(susStream, errStream);
-            exec.setStreamHandler(streamHandler);
-            ExecuteResultHandler erh = new ExecuteResultHandler(){
-                @Override
-                public void onProcessComplete(int exitValue) {
-                    try {
-                        String suc = susStream.toString("GBK");
-                        System.out.println(suc);
-                    } catch (UnsupportedEncodingException uee) {
-                        uee.printStackTrace();
-                    }
+        PumpStreamHandler streamHandler = new PumpStreamHandler(susStream, errStream);
+        exec.setStreamHandler(streamHandler);
+        ExecuteResultHandler erh = new ExecuteResultHandler() {
+            @Override
+            public void onProcessComplete(int exitValue) {
+                try {
+                    String suc = susStream.toString("GBK");
+                    System.out.println(suc);
+                    System.out.println("3. 异步执行成功");
+                } catch (UnsupportedEncodingException uee) {
+                    uee.printStackTrace();
                 }
-                @Override
-                public void onProcessFailed(ExecuteException e) {
-                    try {
-                        String err = errStream.toString("GBK");
-                        System.out.println(err);
-                    } catch (UnsupportedEncodingException uee) {
-                        uee.printStackTrace();
-                    }
+            }
+
+            @Override
+            public void onProcessFailed(ExecuteException e) {
+                try {
+                    String err = errStream.toString("GBK");
+                    System.out.println(err);
+                    System.out.println("3. 异步执行失败");
+                } catch (UnsupportedEncodingException uee) {
+                    uee.printStackTrace();
                 }
-            };
-            exec.execute(commandLine, erh);
-            Thread.currentThread().join();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            }
+        };
+        System.out.println("1. 开始执行");
+        exec.execute(commandLine, erh);
+        System.out.println("2. 做其他操作");
+        Thread.currentThread().join();
     }
 }
