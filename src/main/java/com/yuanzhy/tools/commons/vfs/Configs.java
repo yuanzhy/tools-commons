@@ -4,14 +4,16 @@ import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemManager;
 import org.apache.commons.vfs2.VFS;
 import org.apache.commons.vfs2.impl.StandardFileSystemManager;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class config {
+public class Configs {
 
-    public void t() throws IOException {
+    @Test
+    public void config() throws IOException {
         File config = new File("providers.xml");
         FileSystemManager mgr;
         if (config.exists()) {

@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
-public class utils {
+public class Utils {
 
     public void fileObjectUtils() throws IOException {
         FileSystemManager fsMgr = VFS.getManager();

@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class otherDemo {
+public class OtherDemo {
 
     public void factory() throws Exception {
         // 使用factory动态获取归档流
