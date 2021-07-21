@@ -84,6 +84,7 @@ URI格式
 ============================================================
 #### Zip, Jar and Tar ####
 提供对Zip、Jar和Tar文件内容的只读访问
+需要单独引入commons-compress
 URI格式
     zip://arch-file-uri[!absolute-path]
     jar://arch-file-uri[!absolute-path]
@@ -102,6 +103,7 @@ tgz和tbz2对于tar:gz和tar:bz2是方便的
 ============================================================
 #### gzip and bzip2 ####
 提供对gzip和bzip2文件内容的只读访问
+需要单独引入commons-compress
 URI格式
     gz://compressed-file-uri
     bz2://compressed-file-uri
@@ -116,6 +118,22 @@ URI格式
 示例
     hdfs://somehost:8080/downloads/some_dir
     hdfs://somehost:8080/downloads/some_file.ext
+需要单独引入HDFS相关依赖
+<dependency>
+    <groupId>org.apache.hadoop</groupId>
+    <artifactId>hadoop-hdfs-client</artifactId>
+    <version>3.3</version>
+    </dependency>
+<dependency>
+    <groupId>org.apache.hadoop</groupId>
+    <artifactId>hadoop-common</artifactId>
+    <version>3.3</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.hadoop</groupId>
+    <artifactId>hadoop-hdfs</artifactId>
+    <version>3.3</version>
+</dependency>
 ============================================================
 #### HTTP and HTTPS ####
 提供对HTTP服务器上文件的访问
@@ -133,8 +151,9 @@ URI格式
     keystorePass：         密钥库密码。
     keystoreType：         密钥库类型。
 示例
-    hdfs://somehost:8080/downloads/some_dir
-    hdfs://somehost:8080/downloads/some_file.ext
+    http://somehost:8080/downloads/somefile.jar
+    http://myusername@somehost/index.html
+依赖httpClient
 ============================================================
 #### WebDAV ####
 通过commons-vfs2-jackrabbit1和commons-vfs2-jackrabbit2模块提供对WebDAV服务器上文件的访问。
@@ -148,6 +167,7 @@ URI格式
 ============================================================
 #### FTP ####
 提供对FTP服务器上文件的访问。
+依赖commons-net
 URI格式
     ftp://[username[:password]@]hostname[:port][relative-path]
 示例
@@ -157,6 +177,7 @@ FtpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(options, false);
 ============================================================
 #### FTPS ####
 通过SSL提供对FTP服务器上文件的访问
+依赖commons-net
 URI格式
     ftps://[username[:password]@]hostname[:port][absolute-path]
 示例
@@ -170,13 +191,12 @@ URI格式
     sftp://myusername:mypassword@somehost/pub/downloads/somefile.tgz
 默认情况下，路径相对于用户的主目录。可通过以下方式进行更改：
 FtpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(options, false);
-============================================================
-#### CIFS ####
-CIFS（沙盒）文件系统提供对CIFS服务器（如Samba服务器或Windows共享）的访问
-URI格式
-    smb://[username[:password]@]hostname[:port][absolute-path]
-示例
-    smb://somehost/home
+依赖
+<dependency>
+    <groupId>com.jcraft</groupId>
+    <artifactId>jsch</artifactId>
+    <version>0.1.55</version>
+</dependency>
 ============================================================
 #### Temporary Files ####
 提供对临时文件系统（scratchpad）的访问，该文件系统在Commons VFS关闭时被删除。临时文件系统由本地文件系统支持
@@ -202,7 +222,18 @@ URI格式
 示例
     ram:///any/path/to/file.txt
 ============================================================
-#### MIME ####
+
+%%%%%%%%%%%%%%%%%%%%%% 以下正在开发中 %%%%%%%%%%%%%%%%%%%%%%
+
+============================================================
+#### CIFS ####（开发中）
+CIFS（沙盒）文件系统提供对CIFS服务器（如Samba服务器或Windows共享）的访问
+URI格式
+    smb://[username[:password]@]hostname[:port][absolute-path]
+示例
+    smb://somehost/home
+============================================================
+#### MIME #### （开发中）
 这个（沙盒）文件系统可以读取邮件及其附件，比如归档文件。
 如果已解析邮件中的某个部分没有名称，则将生成一个伪名称。虚拟名称是： _body_part_X，其中X将被零件号替换。
 URI格式
