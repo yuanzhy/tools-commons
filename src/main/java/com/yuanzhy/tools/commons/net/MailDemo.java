@@ -13,8 +13,8 @@ import java.util.Locale;
 
 public class MailDemo {
 
-    private static final String USERNAME = "529164645@qq.com";
-    private static final String PASSWORD = "woshishen000";
+    private static final String USERNAME = "demo@qq.com";
+    private static final String PASSWORD = "pwd";
 
     @Test
     public void pop3() throws IOException {

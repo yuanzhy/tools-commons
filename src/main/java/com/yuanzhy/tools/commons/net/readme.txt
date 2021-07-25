@@ -6,7 +6,7 @@ commons-net库实现了许多基本Internet协议的客户端。
 
 支持的协议包括：
     FTP/FTPS：FTP（File Transfer Protocol，文件传输协议） 是 TCP/IP 协议组中的协议之一。FTP协议包括两个组成部分，其一为FTP服务器，其二为FTP客户端。其中FTP服务器用来存储文件，用户可以使用FTP客户端通过FTP协议访问位于FTP服务器上的资源。在开发网站的时候，通常利用FTP协议把网页或程序传到Web服务器上。此外，由于FTP传输效率非常高，在网络上传输大的文件时，一般也采用该协议。
-    FTP over HTTP (experimental)：
+    FTP over HTTP (experimental)：由于FTP工作在被动模式时不仅需要将21作为FTP的控制（命令）端口，还要将20作为FTP的数据端口，因此在配置防火墙时比较麻烦，不如用http协议传输文件。因此可以利用原有的网站结合Alias的方法加目录访问控制来实现。
     NNTP：网络新闻组传输协议
     SMTP(S)：SMTP（Simple Mail Transfer Protocol）是一种提供可靠且有效的电子邮件传输的协议。SMTP是建立在FTP文件传输服务上的一种邮件服务，主要用于系统之间的邮件信息传递，并提供有关来信的通知
     POP3(S)：POP3，全名为“Post Office Protocol - Version 3”，即“邮局协议版本3”。POP3协议允许电子邮件客户端下载服务器上的邮件，但是在客户端的操作（如移动邮件、标记已读等），不会反馈到服务器上，比如通过客户端收取了邮箱中的3封邮件并移动到其他文件夹，邮箱服务器上的这些邮件是没有同时被移动的
@@ -24,5 +24,25 @@ commons-net库实现了许多基本Internet协议的客户端。
 背景：
 Commons-Net最初是一个名为NetComponents的商业Java库，最初由ORO，Inc.在Java早期开发的。
 在1998发布了1.3.8版本后，源代码被捐赠给Apache软件基金会，并在APACHE许可证下可用。
-从那时起，许多程序员为雅加达公共网的持续发展做出了贡献。当前版本的编号方案与旧版本无关。
-换句话说，Jakarta Commons net1.0成功地取代了NetComponents 1.3.8。apachejakarta Commons现在是一个独立的项目，称为apachecommons
+从那时起，许多程序员为Commons-Net的持续发展做出了贡献。当前版本的编号方案与旧版本无关。
+也就是说，Commons net 1.0成功地取代了NetComponents 1.3.8。
+
+org.apache.commons.net
+org.apache.commons.net.bsd
+org.apache.commons.net.chargen
+org.apache.commons.net.daytime
+org.apache.commons.net.discard
+org.apache.commons.net.echo
+org.apache.commons.net.finger
+org.apache.commons.net.ftp
+org.apache.commons.net.imap
+org.apache.commons.net.io
+org.apache.commons.net.nntp
+org.apache.commons.net.ntp
+org.apache.commons.net.pop3
+org.apache.commons.net.smtp
+org.apache.commons.net.telnet
+org.apache.commons.net.tftp
+org.apache.commons.net.time
+org.apache.commons.net.util
+org.apache.commons.net.whois

@@ -27,7 +27,7 @@ public class Utils {
         // 1. 使用IP和子网掩码
         SubnetUtils subnet = new SubnetUtils("192.168.1.113", "255.255.255.0");
         // 2. 使用CIDR格式地址
-//        SubnetUtils subnet = new SubnetUtils("192.168.1.113/24");
+        // SubnetUtils subnet = new SubnetUtils("192.168.1.113/24");
 
         // 获取网络各种参数
         SubnetUtils.SubnetInfo si = subnet.getInfo();
