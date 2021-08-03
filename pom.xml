@@ -100,7 +100,21 @@
             <artifactId>commons-crypto</artifactId>
             <version>1.1.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.1</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -150,6 +164,12 @@
             <artifactId>junit-jupiter</artifactId>
             <version>5.7.2</version>
             <scope>test</scope>
+        </dependency>
+        <!-- commons-crypto 使用 -->
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>1.32</version>
         </dependency>
 
     </dependencies>

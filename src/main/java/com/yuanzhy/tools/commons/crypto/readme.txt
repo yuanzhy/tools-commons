@@ -1,0 +1,2 @@
+Apache Commons Crypto是一个使用AES-NI（高级加密标准新指令）优化的加密库。Commons Crypto在密码级别和Java流级别提供Java API。
+开发人员可以用最少的编码和工作量实现高性能AES加密/解密。请注意，Commons Crypto没有直接实现AES等加密算法，它包装了OpenSSL和JCE。
