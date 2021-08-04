@@ -27,7 +27,7 @@ public class V4 {
             int code = res.getStatusLine().getStatusCode();
             if (code == HttpStatus.SC_OK) {
                 HttpEntity entity = res.getEntity();
-                System.out.println(EntityUtils.toString(entity));
+                System.out.println(EntityUtils.toString(entity, "UTF-8"));
             } else {
                 System.err.println("请求失败，状态码：" + code);
             }

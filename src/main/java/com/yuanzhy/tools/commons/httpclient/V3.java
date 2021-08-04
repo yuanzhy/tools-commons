@@ -5,11 +5,13 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.junit.Test;
 
 import java.io.IOException;
 
 // 发布于2007年， 已不在维护
 public class V3 {
+    @Test
     public void t() {
         HttpClient httpClient = new HttpClient();
         // 设置连接超时 和 socket超时
