@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static com.yuanzhy.tools.commons.Util.println;
+
 public class MapDemo {
     // user: 张三，李四，张三
     // age: 12
@@ -86,7 +88,7 @@ public class MapDemo {
         map.put("one", 1);
         map.put("two", 2);
         Integer o = map.get("ONE");
-        System.out.println(o);
+        println(o);
     }
     @Test
     public void fixedSizeMap() {
@@ -125,11 +127,11 @@ public class MapDemo {
         map.put("bb", "2");
         map.put("cc", "3");
         // 最早没有被使用的aa将被移出
-        System.out.println(map); // [bb:2, cc:3]
+        println(map); // [bb:2, cc:3]
         // 访问一次bb，此时在put的话将会移出最早没有被访问的cc
         map.get("bb");
         map.put("dd", "4");
-        System.out.println(map); // [bb:2, dd:4]
+        println(map); // [bb:2, dd:4]
     }
 
     public void multiKeyMap() {
@@ -169,6 +171,6 @@ public class MapDemo {
         TransformedMap<String, String> map = TransformedMap.transformedMap(sourceMap, k -> k.toUpperCase(), v -> v.concat("_"));
         map.put("aa", "1");
         map.put("bb", "2");
-        System.out.println(map);//{AA=1_, BB=2_}
+        println(map);//{AA=1_, BB=2_}
     }
 }
