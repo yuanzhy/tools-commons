@@ -2,10 +2,12 @@ package com.yuanzhy.tools.commons.collections;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class CollectionUtilsDemo {
     @Test
@@ -46,5 +48,8 @@ public class CollectionUtilsDemo {
 
     public void mapUtils() {
         // TODO
+        Map<String, String> m = null;
+        // 如果是null则转换为空map
+        MapUtils.emptyIfNull(null);
     }
 }

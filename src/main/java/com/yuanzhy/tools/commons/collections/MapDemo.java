@@ -1,7 +1,9 @@
 package com.yuanzhy.tools.commons.collections;
 
+import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.OrderedMap;
+import org.apache.commons.collections4.bidimap.TreeBidiMap;
 import org.apache.commons.collections4.map.AbstractReferenceMap;
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
 import org.apache.commons.collections4.map.FixedSizeMap;
@@ -62,11 +64,14 @@ public class MapDemo {
     @Test
     public void multiValueMap() {
         // 使用commons实现
-        ListValuedMap<String, String> map = new ArrayListValuedHashMap<>(); // list实现，允许value重复
+
+        // list实现，允许value重复
+        ListValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         map.put("user", "张三");
         map.put("user", "李四");
         map.put("user", "张三");
         map.put("age", "12");
+        // 注意：value的泛型是String, 但是get方法返回的是List<String>
         List<String> users2 = map.get("user"); // [张三,李四,张三]
 
         // multiMap的其他方法
@@ -76,7 +81,7 @@ public class MapDemo {
 
         int size = map.size(); // 4
 
-        Collection<String> ss = map.values();// [张三,李四,12]
+        Collection<String> ss = map.values();// [张三,李四,张三,12]
         map.remove("user"); // 清空user的所有value
         // 转换为原生map
         Map<String, Collection<String>> jMap = map.asMap();
@@ -88,7 +93,7 @@ public class MapDemo {
         map.put("one", 1);
         map.put("two", 2);
         Integer o = map.get("ONE");
-        println(o);
+        println(o); // 1
     }
     @Test
     public void fixedSizeMap() {
@@ -115,6 +120,7 @@ public class MapDemo {
         map.put("此处", "2");
         map.put("cc", "3");
         map.put("dd", "4");
+        // 得到的keySet有序
         Set<String> set = map.keySet(); // 哈哈,此处,cc,dd
         String nk = map.nextKey("此处"); // cc
         String pk = map.previousKey("此处"); // 哈哈
@@ -139,12 +145,21 @@ public class MapDemo {
         MultiKeyMap<String, String> map = new MultiKeyMap<>();
         map.put("zhang", "san", "张三");
         map.put("li", "si", "李四");
-        String zs = map.get("zhang", "san");
+        String zs = map.get("zhang", "san"); // 张三
     }
-
-    public void passiveExpiringMap() {
-        // TODO
-        PassiveExpiringMap<String, String> map = new PassiveExpiringMap<>();
+    @Test
+    public void passiveExpiringMap() throws InterruptedException {
+        // 存活一秒钟
+        int ttlMillis = 1000;
+        PassiveExpiringMap.ExpirationPolicy<String, String> ep = new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<>(ttlMillis);
+        PassiveExpiringMap<String, String> map = new PassiveExpiringMap<>(ep);
+        map.put("a", "1");
+        map.put("b", "2");
+        map.put("c", "3");
+        // 等待一秒后在获取
+        Thread.sleep(1000);
+        String vc = map.get("c");
+        println(vc); // null
     }
 
     @Test
@@ -161,7 +176,9 @@ public class MapDemo {
     }
 
     public void referenceMap() {
+        // key value全部使用软引用，再JVM内存不足的情况下GC会将软引用的键值对回收
         ReferenceMap<String, String> map = new ReferenceMap<>(AbstractReferenceMap.ReferenceStrength.SOFT, AbstractReferenceMap.ReferenceStrength.SOFT);
+        // 正常的map操作
         // TODO  ReferenceIdentityMap
     }
     @Test
@@ -172,5 +189,29 @@ public class MapDemo {
         map.put("aa", "1");
         map.put("bb", "2");
         println(map);//{AA=1_, BB=2_}
+    }
+
+    @Test
+    public void bidiMap() {
+        // 双向map, 可通过value获取key
+        // value也不允许重复，如果重复将会覆盖旧值
+        BidiMap<String, String> map = new TreeBidiMap<>();
+        map.put("dog", "狗");
+        map.put("cat", "猫");
+        // value重复的话key也会被覆盖，相当于"cat2:猫"会覆盖掉"cat:猫"
+        // map.put("cat2", "猫");
+        println(map); // {cat=猫, dog=狗}
+        String key = map.getKey("狗");
+        println(key); // dog
+
+        // 反向，value变为key，key变为value
+        BidiMap<String, String> iMap = map.inverseBidiMap();
+        println(iMap); // {狗=dog, 猫=cat}
+        println(iMap.get("狗")); // dog
+
+        // 对反向map操作同时影响原map
+        iMap.put("鱼", "fish");
+        println(iMap); // {狗=dog, 猫=cat, 鱼=fish}
+        println(map); // {cat=猫, dog=狗, fish=鱼}
     }
 }

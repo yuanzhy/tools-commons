@@ -1,15 +1,14 @@
 package com.yuanzhy.tools.commons.collections;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.collections4.list.FixedSizeList;
-import org.apache.commons.collections4.list.LazyList;
 import org.apache.commons.collections4.list.PredicatedList;
 import org.apache.commons.collections4.list.SetUniqueList;
 import org.apache.commons.collections4.list.TransformedList;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.yuanzhy.tools.commons.Util.println;
 
