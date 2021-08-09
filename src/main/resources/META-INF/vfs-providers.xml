@@ -1,3 +1,7 @@
 <providers>
-
+    <provider class-name="com.yuanzhy.tools.commons.vfs.s3.S3FileProvider">
+        <scheme name="s3"/>
+        <scheme name="minio"/>
+        <if-available class-name="io.minio.MinioClient"/>
+    </provider>
 </providers>
