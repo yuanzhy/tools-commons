@@ -1,10 +1,19 @@
 package com.yuanzhy.tools.commons.vfs.s3;
 
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileType;
+import org.apache.commons.vfs2.provider.AbstractFileObject;
+
 import io.minio.CopyObjectArgs;
 import io.minio.CopySource;
 import io.minio.GetObjectArgs;
 import io.minio.GetObjectResponse;
-import io.minio.GetObjectTagsArgs;
 import io.minio.ListObjectsArgs;
 import io.minio.MinioClient;
 import io.minio.RemoveObjectArgs;
@@ -13,24 +22,7 @@ import io.minio.StatObjectArgs;
 import io.minio.StatObjectResponse;
 import io.minio.errors.ErrorResponseException;
 import io.minio.messages.Item;
-import io.minio.messages.Tags;
 import kotlin.Pair;
-
-import org.apache.commons.vfs2.Capability;
-import org.apache.commons.vfs2.FileName;
-import org.apache.commons.vfs2.FileNotFolderException;
-import org.apache.commons.vfs2.FileObject;
-import org.apache.commons.vfs2.FileSystemException;
-import org.apache.commons.vfs2.FileType;
-import org.apache.commons.vfs2.NameScope;
-import org.apache.commons.vfs2.provider.AbstractFileObject;
-import org.apache.commons.vfs2.provider.GenericFileName;
-
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class S3FileObject extends AbstractFileObject<S3FileSystem> {
 

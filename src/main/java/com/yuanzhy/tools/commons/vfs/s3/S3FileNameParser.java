@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileType;
-import org.apache.commons.vfs2.provider.GenericFileName;
 import org.apache.commons.vfs2.provider.HostFileNameParser;
 import org.apache.commons.vfs2.provider.UriParser;
 import org.apache.commons.vfs2.provider.VfsComponentContext;
