@@ -1,9 +1,6 @@
 package com.yuanzhy.tools.commons.vfs.s3;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
+import io.minio.MinioClient;
 import org.apache.commons.vfs2.Capability;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileSystem;
@@ -14,7 +11,9 @@ import org.apache.commons.vfs2.provider.AbstractOriginatingFileProvider;
 import org.apache.commons.vfs2.provider.GenericFileName;
 import org.apache.commons.vfs2.util.UserAuthenticatorUtils;
 
-import io.minio.MinioClient;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 import static org.apache.commons.vfs2.UserAuthenticationData.PASSWORD;
 import static org.apache.commons.vfs2.UserAuthenticationData.USERNAME;
