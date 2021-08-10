@@ -1,6 +1,9 @@
 package com.yuanzhy.tools.commons.vfs.s3;
 
-import io.minio.MinioClient;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 import org.apache.commons.vfs2.Capability;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileSystem;
@@ -11,9 +14,7 @@ import org.apache.commons.vfs2.provider.AbstractOriginatingFileProvider;
 import org.apache.commons.vfs2.provider.GenericFileName;
 import org.apache.commons.vfs2.util.UserAuthenticatorUtils;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import io.minio.MinioClient;
 
 import static org.apache.commons.vfs2.UserAuthenticationData.PASSWORD;
 import static org.apache.commons.vfs2.UserAuthenticationData.USERNAME;
@@ -33,6 +34,10 @@ public class S3FileProvider extends AbstractOriginatingFileProvider {
                     Capability.ATTRIBUTES, Capability.RANDOM_ACCESS_READ, Capability.DIRECTORY_READ_CONTENT,
                     Capability.LIST_CHILDREN));
 
+    public S3FileProvider() {
+        this.setFileNameParser(S3FileNameParser.getInstance());
+    }
+
     @Override
     protected FileSystem doCreateFileSystem(FileName rootName, FileSystemOptions fileSystemOptions) throws FileSystemException {
         UserAuthenticationData authData = UserAuthenticatorUtils.authenticate(fileSystemOptions, AUTHENTICATOR_TYPES);
@@ -44,7 +49,7 @@ public class S3FileProvider extends AbstractOriginatingFileProvider {
         String accessKey = new String(UserAuthenticatorUtils.getData(authData, USERNAME, UserAuthenticatorUtils.toChar(rootName.getUserName())));
         String secretKey = new String(UserAuthenticatorUtils.getData(authData, PASSWORD, UserAuthenticatorUtils.toChar(rootName.getUserName())));
         MinioClient client = new MinioClient.Builder()
-                .endpoint(rootName.getHostName())
+                .endpoint("http://" + rootName.getHostName() + ":" + rootName.getPort() + "/")
                 .credentials(accessKey, secretKey)
                 .build();
         return client;

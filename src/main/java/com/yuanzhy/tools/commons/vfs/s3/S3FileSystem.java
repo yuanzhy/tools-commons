@@ -22,7 +22,7 @@ public class S3FileSystem extends AbstractFileSystem {
 
     @Override
     protected FileObject createFile(AbstractFileName name) throws Exception {
-        return new S3FileObject(name, this);
+        return new S3FileObject((S3FileName) name, this);
     }
 
     @Override
